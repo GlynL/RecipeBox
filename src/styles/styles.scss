@@ -1,0 +1,10 @@
+@import "./base/normalize";
+@import "./base/config";
+
+body {
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+  color: $font-dark;
+  background: $secondary-colour;
+}

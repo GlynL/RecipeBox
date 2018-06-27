@@ -1,6 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles/styles.css";
+import { BrowserRouter } from "react-router-dom";
+import RecipeBox from "./components/RecipeBox";
+import "./styles/styles.scss";
 
-const template = <p>This is the template</p>;
-ReactDOM.render(template, document.getElementById("root"));
+ReactDOM.render(
+  <BrowserRouter>
+    <RecipeBox />
+  </BrowserRouter>,
+  document.getElementById("root")
+);
