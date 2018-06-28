@@ -1,8 +1,4 @@
 {
-  "presets": ["env", "react"],
-  "plugins": [
-    "transform-object-rest-spread",
-    "transform-async-to-generator",
-    "transform-runtime"
-  ]
+  "presets": ["env", "react", "stage-3"],
+  "plugins": ["transform-runtime"]
 }
