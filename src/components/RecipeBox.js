@@ -4,17 +4,13 @@ import Banner from "./Banner";
 import NewRecipe from "./NewRecipe";
 import AllRecipes from "./AllRecipes";
 
+import { getRecipes } from "../apis/recipes";
+
 class RecipeBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: [
-        {
-          name: "mashed potato",
-          ingredients: ["potato", "milk"],
-          method: ["boil potatoes", "add milk & mash"]
-        }
-      ]
+      recipes: []
     };
 
     this.addRecipe = this.addRecipe.bind(this);
@@ -22,6 +18,11 @@ class RecipeBox extends Component {
 
   addRecipe(recipe) {
     this.setState({ recipes: [...this.state.recipes, recipe] });
+  }
+
+  async componentDidMount() {
+    const recipes = await getRecipes();
+    this.setState({ recipes });
   }
 
   render() {
