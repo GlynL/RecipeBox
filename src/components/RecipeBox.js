@@ -8,7 +8,13 @@ class RecipeBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: []
+      recipes: [
+        {
+          name: "mashed potato",
+          ingredients: ["potato", "milk"],
+          method: ["boil potatoes", "add milk & mash"]
+        }
+      ]
     };
 
     this.addRecipe = this.addRecipe.bind(this);

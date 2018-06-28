@@ -1,0 +1,25 @@
+@import "../base/config";
+
+.recipe {
+  background: #e1e7e1;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #859c8a;
+}
+
+.recipe:hover {
+  box-shadow: 3px 3px 3px 3px $primary-colour;
+  cursor: pointer;
+}
+
+.recipe__title {
+  margin-top: 0;
+}
+
+.recipe__subtitle {
+}
+
+.recipe__list {
+  padding-left: inherit;
+}

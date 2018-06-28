@@ -26,6 +26,7 @@ class NewRecipe extends Component {
     this.props.addRecipe(this.state.recipe);
     const recipe = { name: "", ingredients: [], method: [] };
     this.setState({ recipe, ingredientInput: "", methodInput: "" });
+    this.props.history.push("/recipes");
   }
 
   handleNameChange(e) {

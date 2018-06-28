@@ -31,7 +31,12 @@ module.exports = {
   devtool: "cheap-module-eval-source-map",
   devServer: {
     contentBase: path.join(__dirname, "public"),
-    historyApiFallback: true /* redirect 404's to /index.html  - refresh */
+    historyApiFallback: true /* redirect 404's to /index.html  - refresh */,
+    port: 3000,
+    open: true,
+    proxy: {
+      "/api": "http://localhost:8080"
+    }
   },
   // webpack 4 requirement
   mode: "development"
