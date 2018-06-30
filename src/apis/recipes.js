@@ -6,6 +6,29 @@ export function getRecipes() {
       if (!response.ok) throw new Error("connection issue");
       return response.json();
     })
-    .then(data => data)
+    .catch(error => error);
+}
+
+export function getRecipe(id) {
+  return fetch(`/api/recipes/${id}`)
+    .then(response => {
+      if (!response.ok) throw new Error("connection issue");
+      return response.json();
+    })
+    .catch(error => error);
+}
+
+export function postRecipe(recipe) {
+  return fetch("/api/recipes/new", {
+    method: "POST",
+    body: JSON.stringify(recipe),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  })
+    .then(response => {
+      if (!response.ok) throw new Error("connection issue");
+      return response.json();
+    })
     .catch(error => error);
 }

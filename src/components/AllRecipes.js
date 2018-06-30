@@ -1,14 +1,28 @@
-import React from "react";
-import Recipe from "./Recipe";
+import React, { Component } from "react";
+import RecipeCard from "./RecipeCard";
 
 import "../styles/components/AllRecipes.scss";
 
-const AllRecipes = props => {
-  const recipes = props.recipes.map((recipe, idx) => (
-    <Recipe key={idx} {...recipe} />
-  ));
+class AllRecipes extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return <div className="all-recipes">{recipes}</div>;
-};
+  handleClick(id, e) {
+    this.props.history.push(`/recipes/${id}`);
+  }
+
+  render() {
+    const recipes = this.props.recipes.map(recipe => (
+      <RecipeCard
+        key={recipe._id}
+        handleClick={this.handleClick.bind(this, recipe._id)}
+        {...recipe}
+      />
+    ));
+
+    return <div className="all-recipes">{recipes}</div>;
+  }
+}
 
 export default AllRecipes;

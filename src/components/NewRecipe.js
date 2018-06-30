@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Recipe from "./Recipe";
+import RecipeCard from "./RecipeCard";
 import "../styles/components/NewRecipe.scss";
 
 class NewRecipe extends Component {
@@ -107,7 +107,7 @@ class NewRecipe extends Component {
 
         <button onClick={this.handleClick}>Save Recipe</button>
 
-        <Recipe {...this.state.recipe} />
+        <RecipeCard {...this.state.recipe} />
       </div>
     );
   }

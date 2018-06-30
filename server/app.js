@@ -1,23 +1,50 @@
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get("/api/recipes", (req, res) => {
-  // todo: add in database
-  const recipes = [
-    {
-      name: "grilled streak",
-      ingredients: ["steak", "snp"],
-      method: ["snp steak", "grill steak"]
-    }
-  ];
-  res.json(recipes);
+mongoose.set("debug", true);
+mongoose.connect("mongodb://localhost/recipes");
+mongoose.Promise = Promise;
+
+const recipeSchema = new mongoose.Schema({
+  name: {
+    type: String
+    // required: "name cannot be blank"
+  },
+  ingredients: {
+    type: Array
+  },
+  method: {
+    type: Array
+  }
 });
 
-// todo: add post route for adding recipe
+const Recipe = mongoose.model("Recipe", recipeSchema);
+
+// get all recipes
+app.get("/api/recipes", (req, res) => {
+  Recipe.find({})
+    .then(results => res.json(results))
+    .catch(err => console.log(err));
+});
+
+// get single recipe
+app.get("/api/recipes/:id", (req, res) => {
+  Recipe.findById(req.params.id)
+    .then(results => res.json(results))
+    .catch(err => console.log(err));
+});
+
+// add new recipe
+app.post("/api/recipes/new", (req, res) => {
+  Recipe.create(req.body)
+    .then(result => res.json(result))
+    .catch(err => console.log(err));
+});
 
 // todo: delete route - removing recipe
 

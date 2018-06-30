@@ -3,8 +3,9 @@ import { Switch, Route } from "react-router-dom";
 import Banner from "./Banner";
 import NewRecipe from "./NewRecipe";
 import AllRecipes from "./AllRecipes";
+import Recipe from "./Recipe";
 
-import { getRecipes } from "../apis/recipes";
+import { getRecipes, postRecipe } from "../apis/recipes";
 
 class RecipeBox extends Component {
   constructor(props) {
@@ -16,8 +17,10 @@ class RecipeBox extends Component {
     this.addRecipe = this.addRecipe.bind(this);
   }
 
-  addRecipe(recipe) {
-    this.setState({ recipes: [...this.state.recipes, recipe] });
+  async addRecipe(recipe) {
+    const newRecipe = await postRecipe(recipe);
+    const recipes = [...this.state.recipes, newRecipe];
+    this.setState({ recipes });
   }
 
   async componentDidMount() {
@@ -43,6 +46,7 @@ class RecipeBox extends Component {
               <NewRecipe {...props} addRecipe={this.addRecipe} />
             )}
           />
+          <Route path="/recipes/:id" render={props => <Recipe {...props} />} />
         </Switch>
       </div>
     );
