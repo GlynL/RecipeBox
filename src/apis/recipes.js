@@ -9,6 +9,7 @@ export function getRecipes() {
     .catch(error => error);
 }
 
+// shouldn't need to use
 export function getRecipe(id) {
   return fetch(`/api/recipes/${id}`)
     .then(response => {

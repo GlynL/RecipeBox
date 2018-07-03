@@ -46,7 +46,10 @@ class RecipeBox extends Component {
               <NewRecipe {...props} addRecipe={this.addRecipe} />
             )}
           />
-          <Route path="/recipes/:id" render={props => <Recipe {...props} />} />
+          <Route
+            path="/recipes/:id"
+            render={props => <Recipe {...props} recipes={this.state.recipes} />}
+          />
         </Switch>
       </div>
     );
