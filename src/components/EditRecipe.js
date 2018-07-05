@@ -23,11 +23,9 @@ class EditRecipe extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    this.props.editRecipe(this.state.recipe);
-    // const recipe = { name: "", ingredients: [], method: [] };
-    // this.setState({ recipe, ingredientInput: "", methodInput: "" });
-    // this.props.history.push("/recipes");
+  async handleClick() {
+    const editedRecipe = await this.props.editRecipe(this.state.recipe);
+    this.props.history.push(`/recipes/${editedRecipe._id}`);
   }
 
   handleNameChange(e) {

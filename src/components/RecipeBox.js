@@ -5,8 +5,7 @@ import NewRecipe from "./NewRecipe";
 import AllRecipes from "./AllRecipes";
 import Recipe from "./Recipe";
 import EditRecipe from "./EditRecipe";
-
-import { getRecipes, postRecipe, putRecipe } from "../apis/recipes";
+import * as api from "../apis/recipes";
 
 class RecipeBox extends Component {
   constructor(props) {
@@ -17,24 +16,32 @@ class RecipeBox extends Component {
 
     this.addRecipe = this.addRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
+    this.removeRecipe = this.removeRecipe.bind(this);
   }
 
   async addRecipe(recipe) {
-    const newRecipe = await postRecipe(recipe);
+    const newRecipe = await api.postRecipe(recipe);
     const recipes = [...this.state.recipes, newRecipe];
     this.setState({ recipes });
   }
 
   async editRecipe(recipe) {
-    const editedRecipe = await putRecipe(recipe);
+    const editedRecipe = await api.putRecipe(recipe);
     const recipes = this.state.recipes.map(
       item => (item._id === editedRecipe._id ? editedRecipe : item)
     );
     this.setState({ recipes });
+    return editedRecipe;
+  }
+
+  async removeRecipe(recipe) {
+    await api.deleteRecipe(recipe);
+    const recipes = this.state.recipes.filter(item => item._id !== recipe._id);
+    this.setState({ recipes });
   }
 
   async componentDidMount() {
-    const recipes = await getRecipes();
+    const recipes = await api.getRecipes();
     this.setState({ recipes });
   }
 
@@ -59,7 +66,13 @@ class RecipeBox extends Component {
           <Route
             exact
             path="/recipes/:id"
-            render={props => <Recipe {...props} recipes={this.state.recipes} />}
+            render={props => (
+              <Recipe
+                {...props}
+                recipes={this.state.recipes}
+                removeRecipe={this.removeRecipe}
+              />
+            )}
           />
           <Route
             path="/recipes/edit/:id"

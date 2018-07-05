@@ -40,7 +40,12 @@ class Recipe extends Component {
     this.props.history.push(`/recipes/edit/${id}`);
   }
 
-  handleClickDelete(e) {}
+  handleClickDelete(e) {
+    const id = this.state.recipe._id;
+    const recipe = this.props.recipes.find(recipe => recipe._id === id);
+    this.props.removeRecipe(recipe);
+    this.props.history.push("/recipes");
+  }
 
   render() {
     if (this.state.loading) {

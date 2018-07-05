@@ -48,3 +48,18 @@ export function putRecipe(recipe) {
     })
     .catch(err => err);
 }
+
+export function deleteRecipe(recipe) {
+  return fetch(`/api/recipes/${recipe._id}`, {
+    method: "DELETE",
+    body: JSON.stringify(recipe),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("connection issue");
+      return res.json();
+    })
+    .catch(err => err);
+}
