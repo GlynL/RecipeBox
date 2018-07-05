@@ -10,10 +10,13 @@ class Recipe extends Component {
         name: "Recipe",
         ingredients: [],
         method: [],
-        id: ""
+        _id: ""
       },
       loading: true
     };
+
+    this.handleClickDelete = this.handleClickDelete.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +34,13 @@ class Recipe extends Component {
     const recipe = this.props.recipes.find(recipe => recipe._id === id);
     this.setState({ recipe, loading: false });
   }
+
+  handleClickEdit(e) {
+    const id = this.state.recipe._id;
+    this.props.history.push(`/recipes/edit/${id}`);
+  }
+
+  handleClickDelete(e) {}
 
   render() {
     if (this.state.loading) {
@@ -55,6 +65,10 @@ class Recipe extends Component {
             <li key={idx}>{step}</li>
           ))}
         </ol>
+        <div className="recipe__buttons">
+          <button onClick={this.handleClickEdit}>Edit</button>
+          <button onClick={this.handleClickDelete}>Delete</button>
+        </div>
       </div>
     );
   }

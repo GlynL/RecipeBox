@@ -33,3 +33,18 @@ export function postRecipe(recipe) {
     })
     .catch(error => error);
 }
+
+export function putRecipe(recipe) {
+  return fetch(`/api/recipes/edit/${recipe._id}`, {
+    method: "PUT",
+    body: JSON.stringify(recipe),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("connection issue");
+      return res.json();
+    })
+    .catch(err => err);
+}

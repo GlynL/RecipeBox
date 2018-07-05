@@ -46,6 +46,13 @@ app.post("/api/recipes/new", (req, res) => {
     .catch(err => console.log(err));
 });
 
+// edit recipe
+app.put("/api/recipes/edit/:id", (req, res) => {
+  Recipe.findByIdAndUpdate(req.body._id, req.body, { new: true })
+    .then(result => res.json(result))
+    .catch(err => console.log(err));
+});
+
 // todo: delete route - removing recipe
 
 app.listen(PORT, () => console.log(`app listening on port ${PORT}`));
