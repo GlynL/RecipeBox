@@ -5,6 +5,7 @@ import NewRecipe from "./NewRecipe";
 import AllRecipes from "./AllRecipes";
 import Recipe from "./Recipe";
 import EditRecipe from "./EditRecipe";
+import Register from "./Register";
 import * as api from "../apis/recipes";
 
 class RecipeBox extends Component {
@@ -84,6 +85,7 @@ class RecipeBox extends Component {
               />
             )}
           />
+          <Route path="/user/register" component={Register} />
         </Switch>
       </div>
     );
