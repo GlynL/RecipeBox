@@ -21,6 +21,7 @@ class EditRecipe extends Component {
     this.handleMethodChange = this.handleMethodChange.bind(this);
     this.handleMethodSubmit = this.handleMethodSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
 
   async handleClick() {
@@ -62,6 +63,15 @@ class EditRecipe extends Component {
     });
   }
 
+  handleRemove(e, type, value, idx) {
+    const results = [...this.state.recipe[type]];
+    const newList = results.filter((val, i) => i !== idx);
+    console.log(newList);
+    this.setState({
+      recipe: { ...this.state.recipe, [type]: newList }
+    });
+  }
+
   componentDidMount() {
     if (this.props.match && this.props.recipes.length > 0) {
       this.findRecipe();
@@ -84,7 +94,7 @@ class EditRecipe extends Component {
     return (
       <div className="new-recipe">
         <header>
-          <h1>Add New Recipe</h1>
+          <h1>Edit Recipe</h1>
         </header>
         <input
           placeholder="Boiled Potatoes"
@@ -124,7 +134,11 @@ class EditRecipe extends Component {
 
         <button onClick={this.handleClick}>Save Recipe</button>
 
-        <RecipeCard {...this.state.recipe} />
+        <RecipeCard
+          editRecipe={true}
+          handleRemove={this.handleRemove}
+          {...this.state.recipe}
+        />
       </div>
     );
   }
