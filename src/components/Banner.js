@@ -29,7 +29,7 @@ const Banner = props => (
       Add Recipe
     </NavLink>
     <NavLink
-      to="/user/login"
+      to="/users/login"
       exact
       activeClassName="nav__item--active"
       className="nav__item"
@@ -37,7 +37,7 @@ const Banner = props => (
       Log In
     </NavLink>
     <NavLink
-      to="/user/register"
+      to="/users/register"
       exact
       activeClassName="nav__item--active"
       className="nav__item"
