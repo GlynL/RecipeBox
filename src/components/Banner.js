@@ -29,15 +29,15 @@ const Banner = props => (
       Add Recipe
     </NavLink>
     <NavLink
-      to="/"
+      to="/user/login"
       exact
       activeClassName="nav__item--active"
       className="nav__item"
     >
-      Sign In
+      Log In
     </NavLink>
     <NavLink
-      to="/"
+      to="/user/register"
       exact
       activeClassName="nav__item--active"
       className="nav__item"

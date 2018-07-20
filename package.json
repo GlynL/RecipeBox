@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "concurrently \"npm run dev-server\" \"npm run backend\"",
+    "start": "concurrently --kill-others \"npm run dev-server\" \"npm run backend\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "webpack-dev-server",
     "build": "webpack",
@@ -20,6 +20,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
+    "bcrypt": "^3.0.0",
     "concurrently": "^3.6.0",
     "css-loader": "^0.28.11",
     "express": "^4.16.3",
