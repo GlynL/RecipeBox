@@ -26,7 +26,6 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     const isMatch = await user.comparePassword(req.body.password);
-    console.log(user);
     if (isMatch) {
       let token = jwt.sign(
         {

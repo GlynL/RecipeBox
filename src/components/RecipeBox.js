@@ -8,18 +8,24 @@ import EditRecipe from "./EditRecipe";
 import Register from "./Register";
 import Home from "./Home";
 import * as api from "../apis/recipes";
+import * as userApi from "../apis/users";
+import { runInNewContext } from "vm";
 
 class RecipeBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
       recipes: [],
-      loggedIn: false
+      user: {
+        isAuthenticated: false,
+        info: {}
+      }
     };
 
     this.addRecipe = this.addRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
     this.removeRecipe = this.removeRecipe.bind(this);
+    this.authUser = this.authUser.bind(this);
   }
 
   async addRecipe(recipe) {
@@ -48,15 +54,37 @@ class RecipeBox extends Component {
     this.setState({ recipes });
   }
 
+  async authUser(user, type) {
+    try {
+      let authedUser;
+      if (type === "login") {
+        authedUser = await userApi.loginUser(user);
+      }
+      if (type === "register") {
+        authedUser = await userApi.registerUser(user);
+      }
+      const updatedUser = { isAuthenticated: true, info: authedUser };
+      this.setState({ user: updatedUser });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
+    console.log(this.state.user);
     return (
       <div>
-        <Banner />
+        <Banner isAuthenticated={this.state.user.isAuthenticated} />
         <Switch>
           <Route
             exact
             path="/"
-            render={props => <Home {...props} loggedIn={this.state.loggedIn} />}
+            render={props => (
+              <Home
+                {...props}
+                isAuthenticated={this.state.user.isAuthenticated}
+              />
+            )}
           />
           <Route
             exact
@@ -92,8 +120,18 @@ class RecipeBox extends Component {
               />
             )}
           />
-          <Route path="/users/register" component={Register} />
-          <Route path="/users/login" component={Register} />
+          <Route
+            path="/users/register"
+            render={props => (
+              <Register {...props} type={"register"} authUser={this.authUser} />
+            )}
+          />
+          <Route
+            path="/users/login"
+            render={props => (
+              <Register {...props} type={"login"} authUser={this.authUser} />
+            )}
+          />
         </Switch>
       </div>
     );
