@@ -1,7 +1,7 @@
 import React from "react";
 
 const Register = () => (
-  <form action="">
+  <form>
     <label htmlFor="username">Username</label>
     <input type="text" id="username" name="username" />
     <label htmlFor="password">Password</label>

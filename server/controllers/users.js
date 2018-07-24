@@ -10,3 +10,10 @@ exports.createUser = (req, res) => {
       console.log(err);
     });
 };
+
+exports.login = async (req, res) => {
+  const user = await User.findOne({ username: req.body.username });
+  const isMatch = await user.comparePassword(req.body.password);
+  console.log(user);
+  return isMatch;
+};

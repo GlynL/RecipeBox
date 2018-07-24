@@ -6,13 +6,15 @@ import AllRecipes from "./AllRecipes";
 import Recipe from "./Recipe";
 import EditRecipe from "./EditRecipe";
 import Register from "./Register";
+import Home from "./Home";
 import * as api from "../apis/recipes";
 
 class RecipeBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: []
+      recipes: [],
+      loggedIn: false
     };
 
     this.addRecipe = this.addRecipe.bind(this);
@@ -53,6 +55,11 @@ class RecipeBox extends Component {
         <Switch>
           <Route
             exact
+            path="/"
+            render={props => <Home {...props} loggedIn={this.state.loggedIn} />}
+          />
+          <Route
+            exact
             path="/recipes"
             render={props => (
               <AllRecipes {...props} recipes={this.state.recipes} />
@@ -85,7 +92,8 @@ class RecipeBox extends Component {
               />
             )}
           />
-          <Route path="/user/register" component={Register} />
+          <Route path="/users/register" component={Register} />
+          <Route path="/users/login" component={Register} />
         </Switch>
       </div>
     );
