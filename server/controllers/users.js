@@ -40,6 +40,8 @@ exports.login = async (req, res) => {
         username: user.username,
         token
       });
+    } else {
+      throw new Error("invalid email/password");
     }
   } catch (err) {
     console.log(err);
