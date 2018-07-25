@@ -22,11 +22,18 @@ class Recipe extends Component {
   componentDidMount() {
     // find recipe that matches id in route - ensure recipes array is populated first
     if (this.props.match && this.props.recipes.length > 0) this.findRecipe();
+    if (this.props.recipe) {
+      this.setState({ recipe: this.props.recipe, loading: false });
+    }
   }
 
   componentDidUpdate(prevProps) {
     // check for change in props -- necessary if array needed time to populate
-    if (this.props.recipes !== prevProps.recipes) this.findRecipe();
+    if (this.props.recipes && this.props.recipes !== prevProps.recipes)
+      this.findRecipe();
+    if (this.props.recipe && this.props.recipe !== prevProps.recipe) {
+      this.setState({ recipe: this.props.recipe });
+    }
   }
 
   findRecipe() {
@@ -61,19 +68,45 @@ class Recipe extends Component {
         <h3 className="recipe__subtitle">Ingredients</h3>
         <ul className="recipe__list recipe__list--unordered">
           {this.state.recipe.ingredients.map((ingredient, idx) => (
-            <li key={idx}>{ingredient}</li>
+            <li key={idx}>
+              {ingredient}
+              {this.props.editRecipe && (
+                <button
+                  className="btn"
+                  onClick={e =>
+                    this.props.handleRemove(e, "ingredients", ingredient, idx)
+                  }
+                >
+                  Remove
+                </button>
+              )}
+            </li>
           ))}
         </ul>
         <h3 className="recipe__subtitle">Method</h3>
         <ol className="recipe__list recipe__list--ordered">
           {this.state.recipe.method.map((step, idx) => (
-            <li key={idx}>{step}</li>
+            <li key={idx}>
+              {step}
+              {this.props.editRecipe && (
+                <button
+                  className="btn"
+                  onClick={e =>
+                    this.props.handleRemove(e, "method", method, idx)
+                  }
+                >
+                  Remove
+                </button>
+              )}
+            </li>
           ))}
         </ol>
-        <div className="recipe__buttons">
-          <button onClick={this.handleClickEdit}>Edit</button>
-          <button onClick={this.handleClickDelete}>Delete</button>
-        </div>
+        {this.props.recipes && (
+          <div className="recipe__buttons">
+            <button onClick={this.handleClickEdit}>Edit</button>
+            <button onClick={this.handleClickDelete}>Delete</button>
+          </div>
+        )}
       </div>
     );
   }

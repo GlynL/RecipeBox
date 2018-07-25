@@ -25,6 +25,15 @@ module.exports = {
         test: /\.s?css$/,
         // use allows us to have multiple loaders
         use: ["style-loader", "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {}
+          }
+        ]
       }
     ]
   },
