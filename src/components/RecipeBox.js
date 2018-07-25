@@ -1,22 +1,31 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import Banner from "./Banner";
 import NewRecipe from "./NewRecipe";
 import AllRecipes from "./AllRecipes";
 import Recipe from "./Recipe";
 import EditRecipe from "./EditRecipe";
+import Register from "./Register";
+import Home from "./Home";
 import * as api from "../apis/recipes";
+import * as userApi from "../apis/users";
 
 class RecipeBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: []
+      recipes: [],
+      user: {
+        isAuthenticated: false,
+        info: {}
+      }
     };
 
     this.addRecipe = this.addRecipe.bind(this);
     this.editRecipe = this.editRecipe.bind(this);
     this.removeRecipe = this.removeRecipe.bind(this);
+    this.authUser = this.authUser.bind(this);
   }
 
   async addRecipe(recipe) {
@@ -45,11 +54,46 @@ class RecipeBox extends Component {
     this.setState({ recipes });
   }
 
+  async authUser(user, type) {
+    try {
+      let authedUser;
+      if (type === "login") {
+        authedUser = await userApi.loginUser(user);
+      }
+      if (type === "register") {
+        authedUser = await userApi.registerUser(user);
+      }
+      if (type === "logout") {
+        localStorage.clear();
+        this.setState({ user: { isAuthenticated: false, info: {} } });
+        this.props.history.push("/");
+        return;
+      }
+      const updatedUser = { isAuthenticated: true, info: authedUser };
+      this.setState({ user: updatedUser });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
     return (
       <div>
-        <Banner />
+        <Banner
+          isAuthenticated={this.state.user.isAuthenticated}
+          authUser={this.authUser}
+        />
         <Switch>
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Home
+                {...props}
+                isAuthenticated={this.state.user.isAuthenticated}
+              />
+            )}
+          />
           <Route
             exact
             path="/recipes"
@@ -84,10 +128,22 @@ class RecipeBox extends Component {
               />
             )}
           />
+          <Route
+            path="/users/register"
+            render={props => (
+              <Register {...props} type={"register"} authUser={this.authUser} />
+            )}
+          />
+          <Route
+            path="/users/login"
+            render={props => (
+              <Register {...props} type={"login"} authUser={this.authUser} />
+            )}
+          />
         </Switch>
       </div>
     );
   }
 }
 
-export default RecipeBox;
+export default withRouter(RecipeBox);
