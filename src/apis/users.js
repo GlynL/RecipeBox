@@ -8,9 +8,10 @@ export function loginUser(user) {
       "Content-Type": "application/json"
     })
   })
-    .then(data => {
-      localStorage.setItem("jwtToken", data.token);
-      return data.json();
+    .then(data => data.json())
+    .then(json => {
+      localStorage.setItem("jwtToken", json.token);
+      return json;
     })
     .catch(err => {
       console.log(err);

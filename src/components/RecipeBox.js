@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import Banner from "./Banner";
 import NewRecipe from "./NewRecipe";
 import AllRecipes from "./AllRecipes";
@@ -9,7 +10,6 @@ import Register from "./Register";
 import Home from "./Home";
 import * as api from "../apis/recipes";
 import * as userApi from "../apis/users";
-import { runInNewContext } from "vm";
 
 class RecipeBox extends Component {
   constructor(props) {
@@ -63,6 +63,12 @@ class RecipeBox extends Component {
       if (type === "register") {
         authedUser = await userApi.registerUser(user);
       }
+      if (type === "logout") {
+        localStorage.clear();
+        this.setState({ user: { isAuthenticated: false, info: {} } });
+        this.props.history.push("/");
+        return;
+      }
       const updatedUser = { isAuthenticated: true, info: authedUser };
       this.setState({ user: updatedUser });
     } catch (err) {
@@ -71,10 +77,12 @@ class RecipeBox extends Component {
   }
 
   render() {
-    console.log(this.state.user);
     return (
       <div>
-        <Banner isAuthenticated={this.state.user.isAuthenticated} />
+        <Banner
+          isAuthenticated={this.state.user.isAuthenticated}
+          authUser={this.authUser}
+        />
         <Switch>
           <Route
             exact
@@ -138,4 +146,4 @@ class RecipeBox extends Component {
   }
 }
 
-export default RecipeBox;
+export default withRouter(RecipeBox);

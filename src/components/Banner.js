@@ -6,14 +6,12 @@ const Banner = props => {
   let userDisplay;
   if (props.isAuthenticated) {
     userDisplay = (
-      <NavLink
-        to="/users/logout"
-        exact
-        activeClassName="nav__item--active"
+      <button
         className="nav__item"
+        onClick={() => props.authUser({}, "logout")}
       >
         Log Out
-      </NavLink>
+      </button>
     );
   } else {
     userDisplay = (
