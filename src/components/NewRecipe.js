@@ -89,7 +89,7 @@ class NewRecipe extends Component {
             value={this.state.ingredientInput}
             onChange={this.handleIngredientChange}
           />
-          <button>Add Ingredient</button>
+          <button className="btn">Add Ingredient</button>
         </form>
 
         <form action="" onSubmit={this.handleMethodSubmit}>
@@ -102,10 +102,12 @@ class NewRecipe extends Component {
             value={this.state.methodInput}
             onChange={this.handleMethodChange}
           />
-          <button>Add Step</button>
+          <button className="btn">Add Step</button>
         </form>
 
-        <button onClick={this.handleClick}>Save Recipe</button>
+        <button className="btn" onClick={this.handleClick}>
+          Save Recipe
+        </button>
 
         <Recipe recipe={this.state.recipe} />
       </div>

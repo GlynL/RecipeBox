@@ -71,6 +71,7 @@ class RecipeBox extends Component {
       }
       const updatedUser = { isAuthenticated: true, info: authedUser };
       this.setState({ user: updatedUser });
+      this.props.history.push("/");
     } catch (err) {
       console.log(err);
     }
@@ -131,13 +132,13 @@ class RecipeBox extends Component {
           <Route
             path="/users/register"
             render={props => (
-              <Register {...props} type={"register"} authUser={this.authUser} />
+              <Register {...props} type={"Register"} authUser={this.authUser} />
             )}
           />
           <Route
             path="/users/login"
             render={props => (
-              <Register {...props} type={"login"} authUser={this.authUser} />
+              <Register {...props} type={"Login"} authUser={this.authUser} />
             )}
           />
         </Switch>

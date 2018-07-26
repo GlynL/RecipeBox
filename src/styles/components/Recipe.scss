@@ -1,11 +1,11 @@
 @import "../base/config";
 
 .recipe {
-  background: #e1e7e1;
+  background: $background-light;
   margin: 10px auto;
   padding: 20px;
   border-radius: 5px;
-  border: 1px solid #859c8a;
+  border: 1px solid $background-dark;
   max-width: 800px;
 }
 

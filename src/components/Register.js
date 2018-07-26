@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../styles/components/Register.scss";
 
 class Register extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Register extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const type = this.props.type;
+    const type = this.props.type.toLowerCase();
     if (type === "register") {
       this.props.authUser(this.state, "register");
     }
@@ -35,28 +36,40 @@ class Register extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="register">
         <h1>{this.props.type}</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-          <button>Submit</button>
+        <form className="register-form" onSubmit={this.handleSubmit}>
+          <div>
+            <div className="register-form__item">
+              <label className="register-form__label" htmlFor="username">
+                Username
+              </label>
+              <input
+                className="input"
+                type="text"
+                id="username"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div>
+              <label className="register-form__label--extra" htmlFor="password">
+                Password
+              </label>
+              <input
+                className="input"
+                type="password"
+                name="password"
+                id="password"
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+            </div>
+          </div>
+          <button className="btn">Submit</button>
         </form>
-      </React.Fragment>
+      </div>
     );
   }
 }
