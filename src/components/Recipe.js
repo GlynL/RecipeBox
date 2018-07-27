@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { RingLoader } from "react-spinners";
 import "../styles/components/Recipe.scss";
-import defaultRecipeImage from "../assets/default-recipe.jpg";
 
 class Recipe extends Component {
   constructor(props) {
@@ -9,7 +8,7 @@ class Recipe extends Component {
     this.state = {
       recipe: {
         name: "Recipe",
-        image: defaultRecipeImage,
+        image: "",
         ingredients: [],
         method: [],
         _id: ""
@@ -67,7 +66,11 @@ class Recipe extends Component {
     return (
       <div className="recipe">
         <h2 className="recipe__title">{this.state.recipe.name}</h2>
-        <img src={defaultRecipeImage} alt={`${this.state.recipe.name} image`} />
+        <img
+          className="recipe__image"
+          src={this.state.recipe.image.url}
+          alt={`${this.state.recipe.name} image`}
+        />
         <h3 className="recipe__subtitle">Ingredients</h3>
         <ul className="recipe__list recipe__list--unordered">
           {this.state.recipe.ingredients.map((ingredient, idx) => (
@@ -118,9 +121,5 @@ class Recipe extends Component {
     );
   }
 }
-
-Recipe.defaultProps = {
-  image: defaultRecipeImage
-};
 
 export default Recipe;

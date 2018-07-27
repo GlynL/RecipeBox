@@ -1,4 +1,5 @@
 const Recipe = require("../models/Recipe");
+const cloudinary = require("cloudinary"); /* don't need to config again */
 
 exports.getRecipes = (req, res) => {
   Recipe.find({})
@@ -12,10 +13,17 @@ exports.getRecipe = (req, res) => {
     .catch(err => console.log(err));
 };
 
-exports.addRecipe = (req, res) => {
-  Recipe.create(req.body)
-    .then(result => res.json(result))
-    .catch(err => console.log(err));
+exports.addRecipe = async (req, res) => {
+  try {
+    let recipe = req.body;
+    recipe.image = {};
+    recipe.image.url = req.file.secure_url;
+    recipe.image.id = req.file.public_id;
+    const newRecipe = await Recipe.create(recipe);
+    res.json(newRecipe);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.editRecipe = (req, res) => {
@@ -24,8 +32,13 @@ exports.editRecipe = (req, res) => {
     .catch(err => console.log(err));
 };
 
-exports.deleteRecipe = (req, res) => {
-  Recipe.findByIdAndRemove(req.body._id)
-    .then(result => res.json(result))
-    .catch(err => console.log(err));
+exports.deleteRecipe = async (req, res) => {
+  try {
+    const response = await Recipe.findByIdAndRemove(req.body._id);
+    const result = await cloudinary.v2.uploader.destroy(req.body.image.id);
+    if (result.result !== "ok") throw new Error("Error deleting image");
+    return res.json(response);
+  } catch (err) {
+    console.log(err);
+  }
 };

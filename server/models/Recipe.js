@@ -5,6 +5,14 @@ const recipeSchema = new mongoose.Schema({
     type: String
     // required: "name cannot be blank"
   },
+  image: {
+    url: {
+      type: String
+    },
+    id: {
+      type: String
+    }
+  },
   ingredients: {
     type: Array
   },

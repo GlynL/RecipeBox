@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Recipe from "./Recipe";
 import "../styles/components/NewRecipe.scss";
+import defaultRecipeImage from "../assets/default-recipe.jpg";
 
 class NewRecipe extends Component {
   constructor(props) {
@@ -8,6 +9,10 @@ class NewRecipe extends Component {
     this.state = {
       recipe: {
         name: "Recipe Title",
+        image: {
+          url: defaultRecipeImage,
+          upload: ""
+        },
         ingredients: [],
         method: []
       },
@@ -15,6 +20,7 @@ class NewRecipe extends Component {
       methodInput: ""
     };
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
     this.handleIngredientSubmit = this.handleIngredientSubmit.bind(this);
     this.handleIngredientChange = this.handleIngredientChange.bind(this);
     this.handleMethodChange = this.handleMethodChange.bind(this);
@@ -24,13 +30,34 @@ class NewRecipe extends Component {
 
   handleClick() {
     this.props.addRecipe(this.state.recipe);
-    const recipe = { name: "", ingredients: [], method: [] };
+    window.URL.revokeObjectURL(this.state.recipe.image.url);
+    const recipe = {
+      name: "",
+      image: {
+        image: defaultRecipeImage,
+        upload: ""
+      },
+      ingredients: [],
+      method: []
+    };
     this.setState({ recipe, ingredientInput: "", methodInput: "" });
     this.props.history.push("/recipes");
   }
 
   handleNameChange(e) {
     const recipe = { ...this.state.recipe, name: e.target.value };
+    this.setState({ recipe });
+  }
+
+  handleFileChange(e) {
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    const recipe = {
+      ...this.state.recipe,
+      image: {
+        url,
+        upload: e.target.files[0]
+      }
+    };
     this.setState({ recipe });
   }
 
@@ -78,6 +105,12 @@ class NewRecipe extends Component {
           name="name"
           value={this.state.recipe.name}
           onChange={this.handleNameChange}
+        />
+        <input
+          type="file"
+          name="recipe-image"
+          id="recipe-image"
+          onChange={this.handleFileChange}
         />
         <form onSubmit={this.handleIngredientSubmit} action="">
           <input

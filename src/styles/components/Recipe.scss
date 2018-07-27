@@ -13,6 +13,11 @@
   margin-top: 0;
 }
 
+.recipe__image {
+  max-width: 400px;
+  max-height: 400px;
+}
+
 .recipe__list {
   padding-left: inherit;
 }

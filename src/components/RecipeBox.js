@@ -29,7 +29,12 @@ class RecipeBox extends Component {
   }
 
   async addRecipe(recipe) {
-    const newRecipe = await api.postRecipe(recipe);
+    let formData = new FormData();
+    formData.append("name", recipe.name);
+    formData.append("recipe-image", recipe.image.upload);
+    formData.append("ingredients", recipe.ingredients);
+    formData.append("method", recipe.method);
+    const newRecipe = await api.postRecipe(formData);
     const recipes = [...this.state.recipes, newRecipe];
     this.setState({ recipes });
   }

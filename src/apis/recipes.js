@@ -22,10 +22,7 @@ export function getRecipe(id) {
 export function postRecipe(recipe) {
   return fetch("/api/recipes/new", {
     method: "POST",
-    body: JSON.stringify(recipe),
-    headers: new Headers({
-      "Content-Type": "application/json"
-    })
+    body: recipe
   })
     .then(response => {
       if (!response.ok) throw new Error("connection issue");
