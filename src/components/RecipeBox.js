@@ -34,6 +34,7 @@ class RecipeBox extends Component {
     formData.append("recipe-image", recipe.image.upload);
     formData.append("ingredients", recipe.ingredients);
     formData.append("method", recipe.method);
+    formData.append("author", this.state.user.info.id);
     const newRecipe = await api.postRecipe(formData);
     const recipes = [...this.state.recipes, newRecipe];
     this.setState({ recipes });
@@ -121,7 +122,11 @@ class RecipeBox extends Component {
           <Route
             path="/recipes/new"
             render={props => (
-              <NewRecipe {...props} addRecipe={this.addRecipe} />
+              <NewRecipe
+                {...props}
+                addRecipe={this.addRecipe}
+                user={this.state.user}
+              />
             )}
           />
           <Route

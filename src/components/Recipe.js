@@ -43,7 +43,8 @@ class Recipe extends Component {
   findRecipe() {
     const id = this.props.match.params.id;
     const recipe = this.props.recipes.find(recipe => recipe._id === id);
-    this.setState({ recipe, loading: false });
+    const userRecipe = recipe.author === this.props.user.info.id ? true : false;
+    this.setState({ recipe, loading: false, userRecipe });
   }
 
   handleClickEdit(e) {

@@ -18,6 +18,10 @@ const recipeSchema = new mongoose.Schema({
   },
   method: {
     type: Array
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   }
 });
 

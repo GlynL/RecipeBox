@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Recipe from "./Recipe";
+import UserPrompt from "./UserPrompt";
 import "../styles/components/NewRecipe.scss";
 import defaultRecipeImage from "../assets/default-recipe.jpg";
 
@@ -89,6 +90,7 @@ class NewRecipe extends Component {
   }
 
   render() {
+    if (!this.props.user.isAuthenticated) return <UserPrompt />;
     return (
       <div className="new-recipe">
         <header>

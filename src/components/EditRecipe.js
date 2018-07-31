@@ -8,6 +8,7 @@ class EditRecipe extends Component {
     this.state = {
       recipe: {
         name: "",
+        image: "",
         ingredients: [],
         method: [],
         _id: ""
@@ -16,6 +17,7 @@ class EditRecipe extends Component {
       methodInput: ""
     };
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleFileChange = this.handleFileChange.bind(this);
     this.handleIngredientSubmit = this.handleIngredientSubmit.bind(this);
     this.handleIngredientChange = this.handleIngredientChange.bind(this);
     this.handleMethodChange = this.handleMethodChange.bind(this);
@@ -46,6 +48,17 @@ class EditRecipe extends Component {
     });
   }
 
+  handleFileChange(e) {
+    const url = window.URL.createObjectURL(e.target.files[0]);
+    const recipe = {
+      ...this.state.recipe,
+      image: {
+        url,
+        upload: e.target.files[0]
+      }
+    };
+    this.setState({ recipe });
+  }
   handleIngredientChange(e) {
     this.setState({ ingredientInput: e.target.value });
   }
@@ -104,6 +117,12 @@ class EditRecipe extends Component {
           name="name"
           value={this.state.recipe.name}
           onChange={this.handleNameChange}
+        />
+        <input
+          type="file"
+          name="recipe-image"
+          id="recipe-image"
+          onChange={this.handleFileChange}
         />
         <form onSubmit={this.handleIngredientSubmit} action="">
           <input
