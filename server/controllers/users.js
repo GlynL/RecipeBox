@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
-exports.createUser = (req, res) => {
+exports.createUser = (req, res, next) => {
   User.create(req.body)
     .then(result => {
       let { id, username } = result;
@@ -18,11 +18,11 @@ exports.createUser = (req, res) => {
     })
     .catch(err => {
       console.log("something went wrong");
-      console.log(err);
+      next(err);
     });
 };
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     const isMatch = await user.comparePassword(req.body.password);
@@ -43,6 +43,6 @@ exports.login = async (req, res) => {
       throw new Error("invalid email/password");
     }
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };

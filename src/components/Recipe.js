@@ -13,7 +13,8 @@ class Recipe extends Component {
         method: [],
         _id: ""
       },
-      loading: true
+      loading: true,
+      userRecipe: false
     };
 
     this.handleClickDelete = this.handleClickDelete.bind(this);
@@ -22,7 +23,9 @@ class Recipe extends Component {
 
   componentDidMount() {
     // find recipe that matches id in route - ensure recipes array is populated first
-    if (this.props.match && this.props.recipes.length > 0) this.findRecipe();
+    if (this.props.match && this.props.recipes.length > 0) {
+      return this.findRecipe();
+    }
     if (this.props.recipe) {
       this.setState({ recipe: this.props.recipe, loading: false });
     }
@@ -107,7 +110,7 @@ class Recipe extends Component {
             </li>
           ))}
         </ol>
-        {this.props.recipes && (
+        {this.state.userRecipe && (
           <div className="recipe__buttons">
             <button className="btn" onClick={this.handleClickEdit}>
               Edit

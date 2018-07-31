@@ -22,9 +22,8 @@ class NewRecipe extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleIngredientSubmit = this.handleIngredientSubmit.bind(this);
-    this.handleIngredientChange = this.handleIngredientChange.bind(this);
-    this.handleMethodChange = this.handleMethodChange.bind(this);
     this.handleMethodSubmit = this.handleMethodSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -61,6 +60,13 @@ class NewRecipe extends Component {
     this.setState({ recipe });
   }
 
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  }
+
   handleIngredientSubmit(e) {
     e.preventDefault();
     const ingredients = [
@@ -71,14 +77,6 @@ class NewRecipe extends Component {
       recipe: { ...this.state.recipe, ingredients },
       ingredientInput: ""
     });
-  }
-
-  handleIngredientChange(e) {
-    this.setState({ ingredientInput: e.target.value });
-  }
-
-  handleMethodChange(e) {
-    this.setState({ methodInput: e.target.value });
   }
 
   handleMethodSubmit(e) {
@@ -117,10 +115,10 @@ class NewRecipe extends Component {
             placeholder="potatoes"
             aria-label="ingredient"
             id="ingredient"
-            name="ingredient"
+            name="ingredientInput"
             type="text"
             value={this.state.ingredientInput}
-            onChange={this.handleIngredientChange}
+            onChange={this.handleChange}
           />
           <button className="btn">Add Ingredient</button>
         </form>
@@ -131,9 +129,9 @@ class NewRecipe extends Component {
             aria-label="method"
             type="text"
             id="method"
-            name="method"
+            name="methodInput"
             value={this.state.methodInput}
-            onChange={this.handleMethodChange}
+            onChange={this.handleChange}
           />
           <button className="btn">Add Step</button>
         </form>

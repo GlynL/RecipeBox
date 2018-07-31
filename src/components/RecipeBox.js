@@ -55,6 +55,16 @@ class RecipeBox extends Component {
   }
 
   async componentDidMount() {
+    if (localStorage.getItem("jwtToken")) {
+      const token = localStorage.getItem("jwtToken");
+      const info = jwtDecode(token);
+      this.setState({
+        user: {
+          isAuthenticated: true,
+          info
+        }
+      });
+    }
     const recipes = await api.getRecipes();
     this.setState({ recipes });
   }
@@ -83,6 +93,7 @@ class RecipeBox extends Component {
   }
 
   render() {
+    console.log(this.state.user);
     return (
       <div>
         <Banner
@@ -121,6 +132,7 @@ class RecipeBox extends Component {
                 {...props}
                 recipes={this.state.recipes}
                 removeRecipe={this.removeRecipe}
+                user={this.state.user}
               />
             )}
           />
