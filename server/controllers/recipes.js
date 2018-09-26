@@ -17,8 +17,10 @@ exports.addRecipe = async (req, res, next) => {
   try {
     let recipe = req.body;
     recipe.image = {};
-    recipe.image.url = req.file.secure_url;
-    recipe.image.id = req.file.public_id;
+    if (req.file) {
+      recipe.image.url = req.file.secure_url;
+      recipe.image.id = req.file.public_id;
+    }
     const newRecipe = await Recipe.create(recipe);
     res.json(newRecipe);
   } catch (err) {

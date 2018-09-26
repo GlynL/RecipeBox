@@ -13,7 +13,7 @@ const RecipeCard = props => (
 RecipeCard.defaultProps = {
   handleClick: () => {},
   name: "Recipe",
-  image: defaultRecipeImage
+  image: { url: defaultRecipeImage }
 };
 
 export default RecipeCard;

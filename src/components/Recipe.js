@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { RingLoader } from "react-spinners";
 import "../styles/components/Recipe.scss";
+import defaultRecipe from "../assets/default-recipe.jpg";
 
 class Recipe extends Component {
   constructor(props) {
@@ -72,7 +73,11 @@ class Recipe extends Component {
         <h2 className="recipe__title">{this.state.recipe.name}</h2>
         <img
           className="recipe__image"
-          src={this.state.recipe.image.url}
+          src={
+            this.state.recipe.image
+              ? this.state.recipe.image.url
+              : defaultRecipe
+          }
           alt={`${this.state.recipe.name} image`}
         />
         <h3 className="recipe__subtitle">Ingredients</h3>

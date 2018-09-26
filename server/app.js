@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 mongoose.set("debug", true);
-mongoose.connect("mongodb://localhost/recipes");
+mongoose.connect(process.env.DB || "mongodb://localhost/recipes");
 mongoose.Promise = Promise;
 
 app.use("/api/recipes", recipes);
